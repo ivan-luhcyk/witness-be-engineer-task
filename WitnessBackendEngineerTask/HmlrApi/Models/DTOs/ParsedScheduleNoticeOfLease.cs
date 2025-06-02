@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace WitnessBackendEngineerTask.Models.DTOs;
+namespace HmlrApi.Models.DTOs;
 
 public class ParsedScheduleNoticeOfLease
 {
@@ -38,5 +35,5 @@ public class ParsedScheduleNoticeOfLease
     /// <summary>
     /// All appended Notes to the Entry.
     /// </summary>
-    public List<string> Notes { get; set; } = new();
+    public List<string> Notes { get; set; } = [];
 }

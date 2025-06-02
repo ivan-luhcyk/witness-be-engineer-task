@@ -1,18 +1,12 @@
-using System;
-using System.Linq;
+using HmlrApi.Implementation;
+using HmlrApi.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using WitnessBackendEngineerTask.Implementation;
-using WitnessBackendEngineerTask.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthentication("basic")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("basic", null);
@@ -39,7 +33,7 @@ builder.Services.AddSwaggerGen(o =>
                     Id = "basic"
                 }
             },
-            new string[] {}
+            []
         }
     });
 });
@@ -60,12 +54,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/schedules", [Authorize] ([FromServices] IRawScheduleDataService rawScheduleDataService) => {
-    return rawScheduleDataService.GetRawScheduleNoticeOfLeases();
-});
+app.MapGet("/schedules", [Authorize] ([FromServices] IRawScheduleDataService rawScheduleDataService) => rawScheduleDataService.GetRawScheduleNoticeOfLeases());
 
-app.MapGet("/results", [Authorize] ([FromServices] IParsedScheduleDataService parsedScheduleDataService) => { 
-    return parsedScheduleDataService.GetParsedScheduleNoticeOfLeases();
-});
+app.MapGet("/results", [Authorize] ([FromServices] IParsedScheduleDataService parsedScheduleDataService) => parsedScheduleDataService.GetParsedScheduleNoticeOfLeases());
 
 app.Run();

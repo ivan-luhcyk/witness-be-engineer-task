@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WitnessBackendEngineerTask", "WitnessBackendEngineerTask\WitnessBackendEngineerTask.csproj", "{2DBE09ED-6023-4D66-B6E9-8EFDCC530053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HmlrApi", "HmlrApi\HmlrApi.csproj", "{2DBE09ED-6023-4D66-B6E9-8EFDCC530053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
