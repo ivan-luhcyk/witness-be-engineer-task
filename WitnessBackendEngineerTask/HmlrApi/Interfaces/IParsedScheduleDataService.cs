@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using WitnessBackendEngineerTask.Models.DTOs;
+using HmlrApi.Models.DTOs;
 
-namespace WitnessBackendEngineerTask.Interfaces;
+namespace HmlrApi.Interfaces;
 
 public interface IParsedScheduleDataService
 {

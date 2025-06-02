@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace WitnessBackendEngineerTask.Models.DTOs;
+namespace HmlrApi.Models.DTOs;
 
 public class RawScheduleNoticeOfLease
 {
@@ -22,5 +20,5 @@ public class RawScheduleNoticeOfLease
     /// <summary>
     /// Details of the Entry
     /// </summary>
-    public List<string> EntryText { get; set; } = new();
+    public List<string> EntryText { get; set; } = [];
 }

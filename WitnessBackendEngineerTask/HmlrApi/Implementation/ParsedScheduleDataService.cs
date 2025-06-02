@@ -1,16 +1,15 @@
-using System.Collections.Generic;
-using WitnessBackendEngineerTask.Interfaces;
-using WitnessBackendEngineerTask.Models.DTOs;
+using HmlrApi.Interfaces;
+using HmlrApi.Models.DTOs;
 
-namespace WitnessBackendEngineerTask.Implementation;
+namespace HmlrApi.Implementation;
 
 public class ParsedScheduleDataService : IParsedScheduleDataService
+{
+    public IEnumerable<ParsedScheduleNoticeOfLease> GetParsedScheduleNoticeOfLeases()
     {
-        public IEnumerable<ParsedScheduleNoticeOfLease> GetParsedScheduleNoticeOfLeases()
+        return new List<ParsedScheduleNoticeOfLease>
         {
-            return new List<ParsedScheduleNoticeOfLease>()
-        {
-            new ParsedScheduleNoticeOfLease()
+            new()
             {
                 EntryNumber = 1,
                 EntryDate = null,
@@ -19,7 +18,7 @@ public class ParsedScheduleDataService : IParsedScheduleDataService
                 DateOfLeaseAndTerm = "06.07.2009 125 years from 1.1.2009",
                 LesseesTitle = "EGL557357"
             },
-            new ParsedScheduleNoticeOfLease()
+            new()
             {
                 EntryNumber = 2,
                 EntryDate = null,
@@ -28,7 +27,7 @@ public class ParsedScheduleDataService : IParsedScheduleDataService
                 DateOfLeaseAndTerm = "10.10.2018 from 10 October 2018 to and including 19 April 2028",
                 LesseesTitle = "TGL513556"
             },
-            new ParsedScheduleNoticeOfLease()
+            new()
             {
                 EntryNumber = 3,
                 EntryDate = null,
@@ -37,7 +36,7 @@ public class ParsedScheduleDataService : IParsedScheduleDataService
                 DateOfLeaseAndTerm = "06.08.2013 Beginning on and including 6.8.2013 and ending on and including 6.8.2023",
                 LesseesTitle = "TGL383606"
             },
-            new ParsedScheduleNoticeOfLease()
+            new()
             {
                 EntryNumber = 4,
                 EntryDate = null,
@@ -45,13 +44,14 @@ public class ParsedScheduleDataService : IParsedScheduleDataService
                 PropertyDescription = "17 Ashworth Close (Ground and First Floor Flat)",
                 DateOfLeaseAndTerm = "01.06.1989 125 years from 1.6.1989",
                 LesseesTitle = "TGL24029",
-                Notes = new List<string>() {
+                Notes =
+                [
                     "NOTE 1: A Deed of Rectification dated 7 September 1992 made between (1) Orbit Housing Association and (2) John Joseph McMahon Nellie Helen McMahon and John George McMahon is supplemental to the Lease dated 1 June 1989 of 17 Ashworth Close referred to above. The lease actually comprises the second floor flat numbered 24 (Part of) on the filed plan. (Copy Deed filed under TGL24029)",
                     "NOTE 2: By a Deed dated 23 May 1996 made between (1) Orbit Housing Association (2) John Joseph McMahon Nellie Helen McMahon and John George McMahon and (3) Britannia Building Society the terms of the lease were varied. (Copy Deed filed under TGL24029).",
                     "NOTE 3: A Deed dated 13 February 1997 made between (1) Orbit Housing Association (2) John Joseph McMahon and others and (3) Britannia Building Society is supplemental to the lease. It substitutes a new plan for the original lease plan. (Copy Deed filed under TGL24029)"
-                }
+                ]
             },
-            new ParsedScheduleNoticeOfLease()
+            new()
             {
                 EntryNumber = 5,
                 EntryDate = null,
@@ -59,10 +59,11 @@ public class ParsedScheduleDataService : IParsedScheduleDataService
                 PropertyDescription = "12 Harbord Close (Ground and First Floor Flat)",
                 DateOfLeaseAndTerm = "01.09.1989 125 years from 1.9.1989",
                 LesseesTitle = "TGL27196",
-                Notes = new List<string>() {
+                Notes =
+                [
                     "NOTE: By a Deed dated 20 July 1995 made between (1) Orbit Housing Association and (2) Clifford Ronald Mitchell the terms of the Lease were varied.  (Copy Deed filed under TGL27169)"
-                }
+                ]
             }
         };
-        }
     }
+}

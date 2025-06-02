@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace WitnessBackendEngineerTask.Implementation;
+namespace HmlrApi.Implementation;
 
 public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
@@ -40,12 +34,12 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
                 {
                     var authToken = header.Substring(TOKEN_START_INDEX).Trim();
                     var creds = Encoding.UTF8.GetString(Convert.FromBase64String(authToken)).Split(':');
-                    if (creds.Length == 2 && creds.First() == "testy" && creds.Last() == "mcTestFace")
+                    if (creds.Length == 2 && creds.First() == "my" && creds.Last() == "password")
                     {
                         var claimsPrincipal = new ClaimsPrincipal(
                             new ClaimsIdentity(new List<Claim>()
                             {
-                                new Claim(ClaimTypes.Role, "User")
+                                new(ClaimTypes.Role, "User")
                             }, "Basic")
                         );
 
