@@ -34,7 +34,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
                 {
                     var authToken = header.Substring(TOKEN_START_INDEX).Trim();
                     var creds = Encoding.UTF8.GetString(Convert.FromBase64String(authToken)).Split(':');
-                    if (creds.Length == 2 && creds.First() == "my" && creds.Last() == "password")
+                    if (creds.Length == 2 && creds.First() == "username" && creds.Last() == "password")
                     {
                         var claimsPrincipal = new ClaimsPrincipal(
                             new ClaimsIdentity(new List<Claim>()
