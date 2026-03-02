@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LeaseProcessing", "LeasePro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaseProcessing.Functions", "LeaseProcessing\LeaseProcessing.Functions\LeaseProcessing.Functions.csproj", "{EFA0E482-A995-458A-A8BD-158C5634AE10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaseProcessing.Functions.Tests", "LeaseProcessing\LeaseProcessing.Functions.Tests\LeaseProcessing.Functions.Tests.csproj", "{B1D767D8-33ED-4E84-A0B8-BE031BECA16F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WitnessBackendEngineerTask.Common", "WitnessBackendEngineerTask.Common\WitnessBackendEngineerTask.Common.csproj", "{C96768A9-105B-4A31-867B-CC09AA40058E}"
 EndProject
 Global
@@ -29,6 +31,10 @@ Global
 		{EFA0E482-A995-458A-A8BD-158C5634AE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFA0E482-A995-458A-A8BD-158C5634AE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFA0E482-A995-458A-A8BD-158C5634AE10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D767D8-33ED-4E84-A0B8-BE031BECA16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D767D8-33ED-4E84-A0B8-BE031BECA16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D767D8-33ED-4E84-A0B8-BE031BECA16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D767D8-33ED-4E84-A0B8-BE031BECA16F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C96768A9-105B-4A31-867B-CC09AA40058E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C96768A9-105B-4A31-867B-CC09AA40058E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96768A9-105B-4A31-867B-CC09AA40058E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EFA0E482-A995-458A-A8BD-158C5634AE10} = {355A60B0-31C9-4E35-A5A1-057FCBA263F5}
+		{B1D767D8-33ED-4E84-A0B8-BE031BECA16F} = {355A60B0-31C9-4E35-A5A1-057FCBA263F5}
 	EndGlobalSection
 EndGlobal
