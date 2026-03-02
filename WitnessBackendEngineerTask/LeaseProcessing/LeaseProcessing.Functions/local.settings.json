@@ -1,0 +1,23 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "Hmlr:BaseUrl": "http://localhost:8081",
+    "Hmlr:Username": "username",
+    "Hmlr:Password": "password",
+    "Redis:ConnectionString": "localhost:6379",
+    "ParserAuth:ServiceToken": "local-dev-service-token",
+    "ParserAuth:TimestampHeaderName": "X-Request-Timestamp",
+    "ParserAuth:NonceHeaderName": "X-Request-Nonce",
+    "ParserAuth:SignatureHeaderName": "X-Request-Signature",
+    "ParserAuth:NonceKeyPrefix": "lease:nonce:",
+    "ParserAuth:AllowedClockSkewSeconds": "300",
+    "RedisRetry:MaxAttempts": "3",
+    "RedisRetry:InitialDelayMs": "100",
+    "RedisRetry:MaxDelayMs": "1000",
+    "HmlrRetry:MaxAttempts": "3",
+    "HmlrRetry:InitialDelayMs": "200",
+    "HmlrRetry:MaxDelayMs": "2000"
+  }
+}
