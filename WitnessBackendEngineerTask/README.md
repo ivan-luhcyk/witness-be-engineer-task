@@ -2,6 +2,49 @@
 
 Local implementation with asynchronous lease parsing via Azure Functions and Redis caching.
 
+## System Design Schema
+
+```text
+                    +----------------------+
+Client ------------>| LeaseApi             |
+GET /{titleNumber}  | - Rate limit         |
+                    | - Cache/status check |
+                    +----------+-----------+
+                               |
+                               | Redis GET/SET
+                               v
+                      +--------+--------+
+                      | Redis           |
+                      | result/status   |
+                      | lock/nonce      |
+                      +--------+--------+
+                               ^
+                               | (HMAC signed HTTP trigger)
+                               |
+                    +----------+-----------+
+                    | LeaseProcessing      |
+                    | Azure Function       |
+                    | POST /api/parse      |
+                    +----------+-----------+
+                               |
+                               | GET /schedules
+                               v
+                      +--------+--------+
+                      | HmlrApi         |
+                      +-----------------+
+```
+
+Request lifecycle:
+
+1. Client calls `GET /{titleNumber}`.
+2. `LeaseApi` checks Redis result key.
+3. If found -> `200 OK`.
+4. If not found -> set status `Pending`, return `202 Accepted`.
+5. API acquires short Redis lock and triggers function with HMAC headers.
+6. Function validates signature + nonce + timestamp.
+7. Function reads full HMLR schedule list, parses all entries, writes all results/statuses to Redis.
+8. Client polls `GET /{titleNumber}` or `GET /results`.
+
 ## Services
 
 - `HmlrApi`: mock/source API for schedules (`/schedules`).
@@ -118,6 +161,56 @@ Exposed ports:
   - per-title processing status
   - anti-spam lock + nonce replay protection
 
-## More Detail
+## Production Scaling
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for class-level documentation and sequence details.
+### 1) API Layer
+
+- Run multiple `LeaseApi` replicas behind a load balancer/API gateway.
+- Keep API stateless; all state stays in Redis.
+- Keep per-IP rate limits at edge (gateway/WAF) and app-level for defense in depth.
+
+### 2) Function Layer
+
+- Deploy Function App on an Elastic plan (or Premium) with autoscale.
+- Keep trigger endpoint internal/private (VNet/private endpoint/APIM) and require HMAC or managed identity.
+- Add concurrency controls so one parse job does not starve resources.
+
+### 3) Work Distribution (recommended next step)
+
+Current design parses full list per trigger. For higher scale:
+
+- Introduce a queue-based pipeline:
+  1. API enqueues parse request.
+  2. Function/worker dequeues.
+  3. Optional fan-out by chunks/pages/title groups.
+- This gives better backpressure handling, retries, and horizontal worker scaling.
+
+### 4) Redis at Scale
+
+- Use managed Redis with replication and persistence.
+- Use eviction policy aligned with cache SLA (and explicit TTLs for status/result keys if needed).
+- Separate logical prefixes/db for lock keys, status keys, and result keys.
+
+### 5) Reliability
+
+- Add circuit breaker + timeout policies for HMLR upstream.
+- Keep idempotent writes (`SET` by normalized title key).
+- Store failure reason/status for observability and safe retries.
+
+### 6) Security
+
+- Move service token to secret manager (Key Vault / AWS Secrets Manager), rotate regularly.
+- Enforce TLS everywhere.
+- Restrict function ingress to trusted callers only.
+- Add request signature age checks (already present) and short nonce TTL (already present).
+
+### 7) Observability
+
+- Emit structured logs with correlation id (`titleNumber`, request id, function invocation id).
+- Track metrics:
+  - trigger success/failure rate
+  - parse duration
+  - queue depth (if queue introduced)
+  - Redis latency/errors
+  - cache hit ratio
+- Add alerts on sustained parse failures and trigger connectivity errors.
