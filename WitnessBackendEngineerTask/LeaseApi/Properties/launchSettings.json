@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "LeaseApi": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Hmlr__BaseUrl": "https://localhost:7273",
+        "Hmlr__Username": "username",
+        "Hmlr__Password": "password"
+      }
+    }
+  }
+}

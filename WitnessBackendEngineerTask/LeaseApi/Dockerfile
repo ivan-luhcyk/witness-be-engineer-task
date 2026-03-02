@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 8080
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["LeaseApi/LeaseApi.csproj", "LeaseApi/"]
+RUN dotnet restore "LeaseApi/LeaseApi.csproj"
+COPY . .
+WORKDIR "/src/LeaseApi"
+RUN dotnet publish "LeaseApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_HTTP_PORTS=8080
+ENTRYPOINT ["dotnet", "LeaseApi.dll"]

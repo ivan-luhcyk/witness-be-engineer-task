@@ -1,0 +1,25 @@
+services:
+  hmlr-api:
+    build:
+      context: .
+      dockerfile: HmlrApi/Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+
+  lease-api:
+    build:
+      context: .
+      dockerfile: LeaseApi/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      Hmlr__BaseUrl: http://hmlr-api:8080
+      Hmlr__Username: username
+      Hmlr__Password: password
+    depends_on:
+      - hmlr-api

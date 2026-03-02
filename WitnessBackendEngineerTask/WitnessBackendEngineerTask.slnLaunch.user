@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "HmlrApi\\HmlrApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "LeaseApi\\LeaseApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

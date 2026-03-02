@@ -1,4 +1,8 @@
 /WitnessBackendEngineerTask/.idea
-/WitnessBackendEngineerTask/HmlrApi/obj
-/WitnessBackendEngineerTask/HmlrApi/bin
+/WitnessBackendEngineerTask/HmlrApi/obj/
+/WitnessBackendEngineerTask/HmlrApi/bin/
+/WitnessBackendEngineerTask/LeaseApi/obj/
+/WitnessBackendEngineerTask/LeaseApi/bin/
+/.vs/
+/WitnessBackendEngineerTask/.vs/
 
