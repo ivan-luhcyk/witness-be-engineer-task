@@ -21,14 +21,37 @@ public sealed class LeaseController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Returns all parsed lease results currently available in Redis.
+    /// </summary>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <returns>Collection of parsed lease records.</returns>
     [HttpGet("results")]
+    [ProducesResponseType(typeof(IReadOnlyList<ParsedScheduleNoticeOfLease>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllResults(CancellationToken cancellationToken)
     {
         var results = await _cache.GetAllResultsAsync();
         return Ok(results);
     }
 
+    /// <summary>
+    /// Gets a parsed lease by title number.
+    /// </summary>
+    /// <param name="titleNumber">Lease title number (for example: <c>TGL24029</c>).</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <returns>
+    /// <list type="bullet">
+    /// <item><description><c>200</c> when parsed data is available.</description></item>
+    /// <item><description><c>202</c> when parsing is queued/in progress.</description></item>
+    /// <item><description><c>500</c> when parsing failed for this title.</description></item>
+    /// </list>
+    /// </returns>
     [HttpGet("{titleNumber}")]
+    [ProducesResponseType(typeof(ParsedScheduleNoticeOfLease), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LeaseProcessingStatus), StatusCodes.Status202Accepted)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> GetByTitle(string titleNumber, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(titleNumber))

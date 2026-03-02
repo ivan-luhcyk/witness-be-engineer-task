@@ -1,5 +1,6 @@
 using LeaseApi.Options;
 using LeaseApi.Services;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Threading.RateLimiting;
 using WitnessBackendEngineerTask.Common.Options;
@@ -26,7 +27,22 @@ builder.Services.AddRateLimiter(options =>
             }));
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Lease API",
+        Version = "v1",
+        Description = "Lease lookup API with asynchronous parsing and Redis-backed status/result cache."
+    });
+
+    var xmlFile = $"{typeof(Program).Assembly.GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
+});
 builder.Services.AddSingleton<IConnectionMultiplexer>(_ =>
 {
     var options = builder.Configuration.GetSection(RedisOptions.SectionName).Get<RedisOptions>() ?? new RedisOptions();
